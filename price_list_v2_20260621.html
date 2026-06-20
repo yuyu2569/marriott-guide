@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>国内ホテル価格リスト｜Marriott Bonvoy</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0f0f0f;
+    color: #e8e4df;
+    font-family: 'Helvetica Neue', 'Hiragino Sans', 'Yu Gothic', sans-serif;
+    font-size: 14px;
+    padding-bottom: 60px;
+  }
+
+  .header {
+    padding: 36px 20px 24px;
+    text-align: center;
+    border-bottom: 1px solid #1e1e1e;
+  }
+  .header-brand {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: #8a7f74;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .header-title {
+    font-size: 22px;
+    font-weight: 300;
+    color: #fff;
+    letter-spacing: 0.05em;
+  }
+  .header-sub {
+    font-size: 12px;
+    color: #8a7f74;
+    margin-top: 6px;
+  }
+
+  /* Region tabs */
+  .tabs-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: #0f0f0f;
+    border-bottom: 1px solid #1e1e1e;
+  }
+  .tabs {
+    display: flex;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    min-width: max-content;
+    padding: 0 12px;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    padding: 13px 15px;
+    font-size: 13px;
+    color: #8a7f74;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: color 0.15s, border-color 0.15s;
+    user-select: none;
+  }
+  .tab.active {
+    color: #c9a96e;
+    border-bottom-color: #c9a96e;
+  }
+
+  /* Sort bar */
+  .sort-bar {
+    display: flex;
+    gap: 8px;
+    padding: 12px 16px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    border-bottom: 1px solid #1e1e1e;
+  }
+  .sort-bar::-webkit-scrollbar { display: none; }
+  .sort-btn {
+    padding: 6px 14px;
+    font-size: 12px;
+    color: #8a7f74;
+    border: 1px solid #2a2a2a;
+    border-radius: 20px;
+    background: transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: color 0.15s, border-color 0.15s;
+    user-select: none;
+  }
+  .sort-btn.active {
+    color: #c9a96e;
+    border-color: #c9a96e;
+  }
+
+  /* Cards */
+  .list {
+    padding: 16px 16px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .card {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .card-name {
+    font-size: 15px;
+    font-weight: 500;
+    color: #fff;
+    line-height: 1.5;
+    flex: 1;
+  }
+  .card-price {
+    font-size: 16px;
+    font-weight: 600;
+    color: #c9a96e;
+    white-space: nowrap;
+    padding-top: 2px;
+  }
+  .card-price.no-price {
+    font-size: 12px;
+    color: #8a7f74;
+    font-weight: 400;
+  }
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+  .card-pref {
+    font-size: 12px;
+    color: #8a7f74;
+  }
+  .card-stars {
+    font-size: 11px;
+    color: #c9a96e;
+    letter-spacing: 0.05em;
+  }
+  .card-comment {
+    font-size: 12px;
+    color: #8a7f74;
+    line-height: 1.6;
+    margin-top: 6px;
+    padding-top: 8px;
+    border-top: 1px solid #242424;
+  }
+  .card-night {
+    font-size: 11px;
+    color: #8a7f74;
+    margin-left: 2px;
+  }
+
+  .notes {
+    margin: 24px 16px 0;
+    padding: 16px;
+    background: #1a1a1a;
+    border-radius: 10px;
+    border-left: 3px solid #3a3a3a;
+  }
+  .notes p {
+    font-size: 12px;
+    color: #8a7f74;
+    line-height: 1.8;
+  }
+  .notes p + p { margin-top: 6px; }
+
+  .back-link {
+    display: block;
+    text-align: center;
+    margin: 28px 16px 0;
+    padding: 14px;
+    border: 1px solid #2a2a2a;
+    border-radius: 10px;
+    color: #8a7f74;
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-brand">Marriott Bonvoy</div>
+  <div class="header-title">国内ホテル価格リスト</div>
+  <div class="header-sub">社員割引（MMP）適用価格／1泊・税込</div>
+</div>
+
+<div class="tabs-wrap">
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-region="関東">関東</div>
+    <div class="tab" data-region="近畿">近畿</div>
+    <div class="tab" data-region="中部">中部</div>
+    <div class="tab" data-region="北海道">北海道</div>
+    <div class="tab" data-region="東北">東北</div>
+    <div class="tab" data-region="中国">中国</div>
+    <div class="tab" data-region="九州">九州</div>
+  </div>
+</div>
+
+<div class="sort-bar" id="sort-bar">
+  <button class="sort-btn active" data-sort="default">デフォルト</button>
+  <button class="sort-btn" data-sort="price-asc">価格が安い順</button>
+  <button class="sort-btn" data-sort="price-desc">価格が高い順</button>
+  <button class="sort-btn" data-sort="rec-desc">おすすめ順</button>
+</div>
+
+<div class="list" id="list"></div>
+
+<div class="notes">
+  <p>※ デザインホテルはExplore対象外のため除く。</p>
+  <p>※ 1万円以内であるため、フォーポイントフレックスバイシェラトンと道の駅シリーズ（札幌と大阪を除くフェアフィールドバイマリオット）を除く。</p>
+</div>
+
+<a class="back-link" href="index.html">← ガイドトップへ戻る</a>
+
+<script>
+const ALL_DATA = [{"region": "北海道", "pref": "北海道", "name": "リッツカールトンリザーブニセコ", "rec": "2", "price": "52482", "comment": "一般レートのほうが安いことも多い"}, {"region": "北海道", "pref": "北海道", "name": "ウェスティンルスツ", "rec": "2", "price": "23895", "comment": ""}, {"region": "北海道", "pref": "北海道", "name": "コートヤード札幌", "rec": "2", "price": "9816", "comment": ""}, {"region": "北海道", "pref": "北海道", "name": "フェアフィールド札幌", "rec": "2", "price": "7751", "comment": ""}, {"region": "東北", "pref": "宮城", "name": "ウェスティン仙台", "rec": "3", "price": "14824", "comment": ""}, {"region": "中部", "pref": "長野", "name": "軽井沢マリオット", "rec": "1", "price": "-", "comment": ""}, {"region": "中部", "pref": "長野", "name": "コートヤード白馬", "rec": "2", "price": "10116", "comment": ""}, {"region": "関東", "pref": "栃木", "name": "リッツ日光", "rec": "2", "price": "57734", "comment": ""}, {"region": "関東", "pref": "東京", "name": "リッツ東京", "rec": "2", "price": "43806", "comment": ""}, {"region": "関東", "pref": "東京", "name": "エディション東京銀座", "rec": "2", "price": "39831", "comment": ""}, {"region": "関東", "pref": "東京", "name": "エディション東京虎ノ門", "rec": "2", "price": "30828", "comment": ""}, {"region": "関東", "pref": "東京", "name": "JWマリオット東京", "rec": "2", "price": "19525", "comment": ""}, {"region": "関東", "pref": "東京", "name": "紀尾井町ラグジュアリーコレクション", "rec": "2", "price": "30828", "comment": ""}, {"region": "関東", "pref": "東京", "name": "ウェスティン東京", "rec": "2", "price": "22234", "comment": ""}, {"region": "関東", "pref": "東京", "name": "東京マリオット", "rec": "3", "price": "13977", "comment": ""}, {"region": "関東", "pref": "東京", "name": "メズム東京オートグラフコレクション", "rec": "3", "price": "18724", "comment": ""}, {"region": "関東", "pref": "東京", "name": "プリンスさくらタワー東京オートグラフコレクション", "rec": "1", "price": "-", "comment": ""}, {"region": "関東", "pref": "東京", "name": "シェラトン都ホテル東京", "rec": "1", "price": "-", "comment": ""}, {"region": "関東", "pref": "東京", "name": "AC東京銀座", "rec": "2", "price": "11000", "comment": ""}, {"region": "関東", "pref": "東京", "name": "コートヤード東京ステーション", "rec": "2", "price": "10216", "comment": ""}, {"region": "関東", "pref": "東京", "name": "コートヤード銀座東武", "rec": "2", "price": "10000", "comment": ""}, {"region": "関東", "pref": "東京", "name": "アロフト東京銀座", "rec": "2", "price": "9816", "comment": ""}, {"region": "関東", "pref": "東京", "name": "モクシー東京錦糸町", "rec": "3", "price": "9816", "comment": "ソフトドリンク飲み放題"}, {"region": "関東", "pref": "神奈川", "name": "ウェスティン横浜", "rec": "2", "price": "18609", "comment": ""}, {"region": "関東", "pref": "神奈川", "name": "横浜ベイシェラトン", "rec": "2", "price": "12531", "comment": ""}, {"region": "関東", "pref": "千葉", "name": "シェラトン東京ベイ", "rec": "3", "price": "15908", "comment": "4名まで同価格"}, {"region": "中部", "pref": "静岡", "name": "伊豆マリオット", "rec": "3", "price": "16246", "comment": ""}, {"region": "中部", "pref": "静岡", "name": "浜松マリオット", "rec": "2", "price": "-", "comment": ""}, {"region": "中部", "pref": "山梨", "name": "富士マリオット山中湖", "rec": "1", "price": "-", "comment": ""}, {"region": "中部", "pref": "愛知", "name": "名古屋マリオットアソシア", "rec": "3", "price": "12368", "comment": "名古屋駅直結"}, {"region": "中部", "pref": "愛知", "name": "TIADオートグラフコレクション", "rec": "3", "price": "18724", "comment": ""}, {"region": "中部", "pref": "愛知", "name": "コートヤード名古屋", "rec": "2", "price": "9816", "comment": ""}, {"region": "中部", "pref": "愛知", "name": "フォーポイント中部国際空港", "rec": "2", "price": "10624", "comment": ""}, {"region": "中部", "pref": "福井", "name": "コートヤード福井", "rec": "2", "price": "13000", "comment": ""}, {"region": "近畿", "pref": "京都", "name": "リッツカールトン京都", "rec": "2", "price": "82836", "comment": ""}, {"region": "近畿", "pref": "京都", "name": "ホテルザ三井京都", "rec": "2", "price": "48433", "comment": ""}, {"region": "近畿", "pref": "京都", "name": "翠嵐LC京都", "rec": "2", "price": "29527", "comment": ""}, {"region": "近畿", "pref": "京都", "name": "ウェスティン都ホテル京都", "rec": "2", "price": "35830", "comment": ""}, {"region": "近畿", "pref": "京都", "name": "チャプター京都", "rec": "2", "price": "17910", "comment": ""}, {"region": "近畿", "pref": "京都", "name": "プリンス京都宝ヶ池オートグラフコレクション", "rec": "1", "price": "18724", "comment": "京都駅から遠く、古い"}, {"region": "近畿", "pref": "京都", "name": "コートヤード京都四条烏丸", "rec": "3", "price": "10442", "comment": "客室シンプルだが観光の立地として◎"}, {"region": "近畿", "pref": "京都", "name": "モクシー京都", "rec": "2", "price": "9816", "comment": ""}, {"region": "近畿", "pref": "滋賀", "name": "琵琶湖マリオット", "rec": "2", "price": "18699", "comment": ""}, {"region": "近畿", "pref": "奈良", "name": "紫翠ラグジュアリーコレクション奈良", "rec": "2", "price": "29527", "comment": ""}, {"region": "近畿", "pref": "奈良", "name": "JWマリオット奈良", "rec": "2", "price": "32229", "comment": ""}, {"region": "近畿", "pref": "大阪", "name": "セントレジス大阪", "rec": "2", "price": "31836", "comment": ""}, {"region": "近畿", "pref": "大阪", "name": "リッツカールトン大阪", "rec": "2", "price": "27827", "comment": ""}, {"region": "近畿", "pref": "大阪", "name": "W大阪", "rec": "2", "price": "24227", "comment": ""}, {"region": "近畿", "pref": "大阪", "name": "大坂ステーションホテルオートグラフコレクション", "rec": "3", "price": "27827", "comment": "JR大阪駅南口直結"}, {"region": "近畿", "pref": "大阪", "name": "大阪マリオット都ホテル", "rec": "3", "price": "21426", "comment": "超高層階（あべのハルカス38階〜55階）"}, {"region": "近畿", "pref": "大阪", "name": "シェラトン都ホテル大阪", "rec": "1", "price": "24050", "comment": ""}, {"region": "近畿", "pref": "大阪", "name": "ウェスティン大阪", "rec": "2", "price": "12368", "comment": ""}, {"region": "近畿", "pref": "大阪", "name": "モクシー大阪梅田", "rec": "2", "price": "9816", "comment": ""}, {"region": "近畿", "pref": "大阪", "name": "モクシー大阪本町", "rec": "2", "price": "9816", "comment": ""}, {"region": "近畿", "pref": "大阪", "name": "アロフト大阪堂島", "rec": "2", "price": "9816", "comment": ""}, {"region": "近畿", "pref": "大阪", "name": "コートヤード大阪本町", "rec": "2", "price": "9816", "comment": ""}, {"region": "近畿", "pref": "大阪", "name": "コートヤード新大阪駅", "rec": "2", "price": "9816", "comment": ""}, {"region": "近畿", "pref": "大阪", "name": "フェアフィールド大阪難波", "rec": "2", "price": "7751", "comment": ""}, {"region": "近畿", "pref": "大阪", "name": "スガタホテルシリーズバイマリオット", "rec": "2", "price": "6738", "comment": ""}, {"region": "近畿", "pref": "兵庫", "name": "神戸ベイシェラトン", "rec": "2", "price": "-", "comment": ""}, {"region": "近畿", "pref": "兵庫", "name": "神戸マリオット", "rec": "2", "price": "14060", "comment": ""}, {"region": "中国", "pref": "広島", "name": "シェラトン広島", "rec": "3", "price": "12776", "comment": "広島駅直結"}, {"region": "九州", "pref": "福岡", "name": "リッツカールトン福岡", "rec": "2", "price": "40431", "comment": ""}, {"region": "九州", "pref": "長崎", "name": "長崎マリオット", "rec": "3", "price": "14224", "comment": "長崎駅直結"}, {"region": "九州", "pref": "鹿児島", "name": "シェラトン鹿児島", "rec": "2", "price": "14820", "comment": ""}, {"region": "九州", "pref": "沖縄", "name": "リッツカールトン沖縄", "rec": "1", "price": "48433", "comment": ""}, {"region": "九州", "pref": "沖縄", "name": "ルネッサンスリゾート沖縄", "rec": "1", "price": "-", "comment": ""}, {"region": "九州", "pref": "沖縄", "name": "シェラトン沖縄", "rec": "1", "price": "18617", "comment": ""}, {"region": "九州", "pref": "沖縄", "name": "沖縄マリオット", "rec": "1", "price": "-", "comment": ""}, {"region": "九州", "pref": "沖縄", "name": "コートヤード沖縄", "rec": "1", "price": "16079", "comment": ""}, {"region": "九州", "pref": "沖縄", "name": "翠宮古島ラグジュアリーコレクション", "rec": "2", "price": "29527", "comment": ""}];
+
+let currentRegion = '関東';
+let currentSort = 'default';
+
+function getPrice(d) {
+  const n = parseInt(d.price);
+  return isNaN(n) ? null : n;
+}
+
+function getRec(d) {
+  const n = parseInt(d.rec);
+  return isNaN(n) ? 0 : n;
+}
+
+function sorted(arr) {
+  const copy = [...arr];
+  if (currentSort === 'price-asc') {
+    copy.sort((a, b) => {
+      const pa = getPrice(a), pb = getPrice(b);
+      if (pa === null && pb === null) return 0;
+      if (pa === null) return 1;
+      if (pb === null) return -1;
+      return pa - pb;
+    });
+  } else if (currentSort === 'price-desc') {
+    copy.sort((a, b) => {
+      const pa = getPrice(a), pb = getPrice(b);
+      if (pa === null && pb === null) return 0;
+      if (pa === null) return 1;
+      if (pb === null) return -1;
+      return pb - pa;
+    });
+  } else if (currentSort === 'rec-desc') {
+    copy.sort((a, b) => getRec(b) - getRec(a));
+  }
+  return copy;
+}
+
+function stars(rec) {
+  const n = parseInt(rec);
+  if (isNaN(n)) return '';
+  return '★'.repeat(n) + '☆'.repeat(3 - n);
+}
+
+function render() {
+  const list = document.getElementById('list');
+  const filtered = ALL_DATA.filter(d => d.region === currentRegion);
+  const items = sorted(filtered);
+  list.innerHTML = items.map(d => {
+    const p = getPrice(d);
+    const priceHtml = p !== null
+      ? `¥${p.toLocaleString('ja-JP')}<span class="card-night"> /泊</span>`
+      : '';
+    const priceClass = p !== null ? 'card-price' : 'card-price no-price';
+    const priceDisplay = p !== null ? priceHtml : 'MMPなし';
+    const comment = d.comment ? `<div class="card-comment">${d.comment}</div>` : '';
+    return `
+      <div class="card">
+        <div class="card-top">
+          <div class="card-name">${d.name}</div>
+          <div class="${priceClass}">${priceDisplay}</div>
+        </div>
+        <div class="card-meta">
+          <span class="card-pref">${d.pref}</span>
+          <span class="card-stars">${stars(d.rec)}</span>
+        </div>
+        ${comment}
+      </div>`;
+  }).join('');
+}
+
+document.getElementById('tabs').addEventListener('click', e => {
+  const tab = e.target.closest('.tab');
+  if (!tab) return;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  tab.classList.add('active');
+  currentRegion = tab.dataset.region;
+  render();
+});
+
+document.getElementById('sort-bar').addEventListener('click', e => {
+  const btn = e.target.closest('.sort-btn');
+  if (!btn) return;
+  document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentSort = btn.dataset.sort;
+  render();
+});
+
+render();
+</script>
+</body>
+</html>

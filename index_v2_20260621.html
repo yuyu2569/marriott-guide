@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marriottアプリ操作ガイド</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0f0f0f;
+    color: #e8e4df;
+    font-family: 'Helvetica Neue', 'Hiragino Sans', 'Yu Gothic', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .header {
+    padding: 52px 24px 36px;
+    text-align: center;
+    border-bottom: 1px solid #1e1e1e;
+  }
+  .header-brand {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: #8a7f74;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-title {
+    font-size: 26px;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    color: #ffffff;
+  }
+
+  .menu {
+    padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1;
+  }
+
+  .menu-item {
+    display: block;
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    padding: 24px 20px;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+  }
+  .menu-item-label {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: #c9a96e;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .menu-item-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: #ffffff;
+    margin-bottom: 6px;
+  }
+  .menu-item-desc {
+    font-size: 13px;
+    color: #8a7f74;
+    line-height: 1.6;
+  }
+  .menu-item-arrow {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #c9a96e;
+    font-size: 18px;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 24px;
+    font-size: 11px;
+    color: #3a3a3a;
+    letter-spacing: 0.05em;
+    border-top: 1px solid #1e1e1e;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-brand">Marriott Bonvoy</div>
+  <div class="header-title">アプリ操作ガイド</div>
+</div>
+
+<div class="menu">
+
+  <a class="menu-item" href="marriott_guide.html">
+    <div class="menu-item-label">操作ガイド</div>
+    <div class="menu-item-title">予約の操作方法</div>
+    <div class="menu-item-desc">社員割引（MMP）を使ったホテル予約の手順</div>
+    <div class="menu-item-arrow">›</div>
+  </a>
+
+  <a class="menu-item" href="price_list.html">
+    <div class="menu-item-label">データ</div>
+    <div class="menu-item-title">国内ホテル価格リスト</div>
+    <div class="menu-item-desc">国内各ホテルのMMP適用価格一覧</div>
+    <div class="menu-item-arrow">›</div>
+  </a>
+
+</div>
+
+<div class="footer">Marriott Bonvoy 社内向けガイド</div>
+
+</body>
+</html>
